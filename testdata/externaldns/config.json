@@ -1,0 +1,6 @@
+{
+  "labels": {
+	"cert-manager": "true",
+	"some-label": "bar"
+	}
+}
