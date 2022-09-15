@@ -46,6 +46,7 @@ func (c *externalDNSProviderSolver) Name() string {
 }
 
 func main() {
+	fmt.Println("Starting webhook for externaldns")
 	cmd.RunWebhookServer(GroupName,
 		&externalDNSProviderSolver{},
 	)

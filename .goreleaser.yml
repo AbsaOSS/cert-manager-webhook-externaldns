@@ -1,0 +1,33 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    id: webhook 
+    main: ./main.go
+    binary: webhook
+    goos:
+      - linux
+    goarch:
+      - amd64
+    flags:
+      - -trimpath
+dockers:
+- image_templates:
+  - "absaoss/cert-manager-webhook-externaldns:v{{ .Version }}-amd64"
+  build_flag_templates:
+  - "--platform=linux/amd64"
+  extra_files:
+  - apiserver.local.config
+docker_manifests:
+- name_template: absaoss/cert-manager-webhook-externaldns:{{ .Tag }}
+  image_templates:
+  - absaoss/cert-manager-webhook-externaldns:v{{ .Version }}-amd64
+  - absaoss/k8gb:v{{ .Version }}-arm64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Version }}-{{ .ShortCommit }}"
+release:
+  draft: false 

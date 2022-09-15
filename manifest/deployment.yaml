@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: externaldns-webhook
+  name: cert-manager-externaldns-webhook
+  namespace: cert-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: externaldns-webhook
+  template:
+    metadata:
+      labels:
+        app: externaldns-webhook
+    spec:
+      serviceAccountName: externaldns-webhook
+      containers:
+      - image: absaoss/cert-manager-webhook-externaldns:v0.0.0-3bf4fbb-amd64
+        name: cert-manager-webhook-externaldns
+        args:
+        - --tls-cert-file=/tls/tls.crt
+        - --tls-private-key-file=/tls/key.crt
+        ports:
+          - name: https
+            containerPort: 443
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /healthz
+            port: https
+        readinessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /healthz
+            port: https

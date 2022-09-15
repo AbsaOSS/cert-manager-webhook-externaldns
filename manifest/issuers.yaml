@@ -1,0 +1,25 @@
+---
+# Create a selfsigned Issuer, in order to create a root CA certificate for
+# signing webhook serving certificates
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: externaldns-webhook-selfsign
+  namespace: cert-manager
+  labels:
+    app: externaldns-webhook
+spec:
+  selfSigned: {}
+---
+# Create an Issuer that uses the above generated CA certificate to issue certs
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: externaldns-webhook-ca
+  namespace: cert-manager
+  labels:
+    app: externaldns-webhook
+spec:
+  ca:
+    secretName: externaldns-webhook-ca
+---

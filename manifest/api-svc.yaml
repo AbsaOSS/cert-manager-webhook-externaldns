@@ -1,0 +1,17 @@
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1alpha1.acme.yourcompany.com
+  namespace: cert-manager
+  labels:
+    app: externaldns-webhook
+  annotations:
+    cert-manager.io/inject-ca-from: "cert-manager/externaldns-webhook-webhook-tls"
+spec:
+  group: example.com
+  groupPriorityMinimum: 1000
+  versionPriority: 15
+  service:
+    name: externaldns-webhook
+    namespace: cert-manager
+  version: v1alpha1
