@@ -11,4 +11,7 @@ spec:
   issuerRef:
     name: externaldns-webhook-selfsign
   commonName: "ca.externaldns-webhook.cert-manager"
+  # secretTemplate:
+  #   annotations:
+  #     cert-manager.io/allow-direct-injection: "true"
   isCA: true

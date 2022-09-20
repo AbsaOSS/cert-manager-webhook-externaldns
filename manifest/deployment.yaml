@@ -16,12 +16,16 @@ spec:
         app: externaldns-webhook
     spec:
       serviceAccountName: externaldns-webhook
+      volumes:
+        - name: certs
+          secret:
+            secretName: externaldns-webhook-tls
       containers:
       - image: absaoss/cert-manager-webhook-externaldns:v0.0.0-3bf4fbb-amd64
         name: cert-manager-webhook-externaldns
         args:
         - --tls-cert-file=/tls/tls.crt
-        - --tls-private-key-file=/tls/key.crt
+        - --tls-private-key-file=/tls/tls.key
         ports:
           - name: https
             containerPort: 443
@@ -36,3 +40,7 @@ spec:
             scheme: HTTPS
             path: /healthz
             port: https
+        volumeMounts:
+          - name: certs
+            mountPath: /tls
+            readOnly: true

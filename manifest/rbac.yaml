@@ -32,10 +32,10 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: alidns-webhook:auth-delegator
+  name: externaldns-webhook:auth-delegator
   namespace: cert-manager
   labels:
-    app: alidns-webhook
+    app: externaldns-webhook
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
