@@ -24,11 +24,10 @@ RUN apk add --no-cache ca-certificates
 WORKDIR /usr/local/bin/
 
 COPY --from=builder /workspace/webhook /usr/local/bin/webhook
-COPY apiserver.local.config/certificates/apiserver.crt /tls/tls.crt
-COPY apiserver.local.config/certificates/apiserver.key /tls/key.crt
+# COPY apiserver.local.config/certificates/apiserver.crt /tls/tls.crt
+# COPY apiserver.local.config/certificates/apiserver.key /tls/key.crt
 
-RUN apk add  --no-cache libcap && setcap 'cap_net_bind_service=+ep' /usr/local/bin/webhook && chown -R 1001 /tls/
-ENV FOO=bar3
+RUN apk add  --no-cache libcap && setcap 'cap_net_bind_service=+ep' /usr/local/bin/webhook
 
 USER 1001
 

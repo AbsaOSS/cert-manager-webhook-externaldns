@@ -4,7 +4,7 @@ metadata:
   name: example-app-cert
   namespace: cert-manager
   labels:
-    app: externaldns-webhook
+    app: externaldns-webhook-example
 spec:
   secretName: example-com-tls
   commonName: example.com

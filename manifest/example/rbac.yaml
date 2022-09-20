@@ -1,0 +1,31 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: externaldns-example-role
+  labels:
+    app: externaldns-webhook-example
+rules:
+- apiGroups:
+  - example.com
+  resources:
+  - externaldns-webhook
+  verbs:
+  - "*"
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: externaldns-example-rolebinding
+  namespace: cert-manager
+  labels:
+    app: externaldns-webhook-example
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: externaldns-example-role
+subjects:
+  - apiGroup: ""
+    kind: ServiceAccount
+    name: cert-manager
+    namespace: cert-manager

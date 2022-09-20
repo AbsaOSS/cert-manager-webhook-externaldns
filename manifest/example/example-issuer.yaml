@@ -3,6 +3,8 @@ kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
   namespace: cert-manager
+  labels:
+    app: externaldns-webhook-example
 spec:
   acme:
     # You must replace this email address with your own.
@@ -17,7 +19,7 @@ spec:
     - dns01:
         webhook:
           groupName: example.com
-          solverName: externaldns 
+          solverName: externaldns-webhook
           config:
             labels:
               cert-manager: true

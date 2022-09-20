@@ -2,13 +2,16 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: externaldns-webhook-webhook-tls
+  name: externaldns-webhook-tls
   namespace: cert-manager
   labels:
     app: externaldns-webhook
 spec:
-  secretName: externaldns-webhook-webhook-tls
+  secretName: externaldns-webhook-tls
   duration: 8760h # 1y
+  # secretTemplate:
+  #   annotations:
+  #     cert-manager.io/allow-direct-injection: "true"
   issuerRef:
     name: externaldns-webhook-ca
   dnsNames:
