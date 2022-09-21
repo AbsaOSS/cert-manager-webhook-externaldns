@@ -22,4 +22,4 @@ spec:
           solverName: externaldns-webhook
           config:
             labels:
-              cert-manager: true
+              cert-manager: "true"

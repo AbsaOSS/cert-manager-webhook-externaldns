@@ -3,7 +3,7 @@ version_settings(constraint='>=0.22.2')
 # https://docs.tilt.dev/api.html#api.docker_build
 # https://docs.tilt.dev/live_update_reference.html
 custom_build(
-    'absaoss/cert-manager-webhook-externaldns',
+    'jkremser/cert-manager-webhook-externaldns',
     'docker build -f ./Dockerfile.multistage -t $EXPECTED_REF . && \
      k3d image import $EXPECTED_REF',
     ['Dockerfile.multistage', 'main.go'],
