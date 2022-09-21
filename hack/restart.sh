@@ -7,6 +7,7 @@ k3d cluster create --no-lb --k3s-arg "--disable=traefik,servicelb,metrics-server
 # install cert-manager
 ${DIR}/k3d-imports.sh
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+kubectl apply -f https://raw.githubusercontent.com/k8gb-io/k8gb/master/chart/k8gb/crd/dns-endpoint-crd-manifest.yaml
 
 sleep 15
 

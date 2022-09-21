@@ -54,6 +54,14 @@ metadata:
     app: externaldns-webhook
 rules:
 - apiGroups:
+  - externaldns.k8s.io
+  resources:
+  - dnsendpoints
+  verbs:
+  - create
+  - list
+  - delete
+- apiGroups:
   - flowcontrol.apiserver.k8s.io
   resources:
   - flowschemas
