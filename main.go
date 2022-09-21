@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/cert-manager/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
@@ -19,17 +20,16 @@ import (
 	"sigs.k8s.io/external-dns/endpoint"
 )
 
-const GroupName = "externaldns.k8s.io"
-const GroupVersion = "v1alpha1"
+var GroupName = os.Getenv("GROUP_NAME")
 
 var gvk = schema.GroupVersionKind{
-	Group:   GroupName,
-	Version: GroupVersion,
+	Group:   "externaldns.k8s.io",
+	Version: "v1alpha1",
 	Kind:    "DNSEndpoint",
 }
 var gvr = schema.GroupVersionResource{
-	Group:    GroupName,
-	Version:  GroupVersion,
+	Group:    "externaldns.k8s.io",
+	Version:  "v1alpha1",
 	Resource: "dnsendpoints",
 }
 
@@ -42,11 +42,14 @@ type externalDNSProviderConfig struct {
 }
 
 func (c *externalDNSProviderSolver) Name() string {
-	return "externaldns"
+	return "externaldns-webhook"
 }
 
 func main() {
 	fmt.Println("Starting webhook for externaldns")
+	if GroupName == "" {
+		panic("GROUP_NAME must be specified")
+	}
 	cmd.RunWebhookServer(GroupName,
 		&externalDNSProviderSolver{},
 	)
@@ -123,7 +126,9 @@ func loadConfig(cfgJSON *extapi.JSON) (*externalDNSProviderConfig, error) {
 	if cfgJSON == nil {
 		return &cfg, nil
 	}
+	//{"labels":{"cert-manager":true}}
 	if err := json.Unmarshal(cfgJSON.Raw, &cfg); err != nil {
+		fmt.Printf("Unable to unmarshall following json:\n%s", string(cfgJSON.Raw[:]))
 		return &cfg, fmt.Errorf("error decoding solver config: %v", err)
 	}
 

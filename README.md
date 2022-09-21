@@ -4,6 +4,13 @@ This project aims to provide [cert-manager](https://cert-manager.io) webhook plu
 
 ## Quick Start
 
+First check the supported version and if necessary adjust the versions of k8s and cert-manager: 
+https://cert-manager.io/docs/installation/supported-releases/.
+
+This custom cert-manager webook assumes the `DNSEndpoint`
+ [crd](https://github.com/k8gb-io/k8gb/blob/master/chart/k8gb/crd/dns-endpoint-crd-manifest.yaml) and `external-dns` [controller](https://github.com/kubernetes-sigs/external-dns) to be present in the cluster 
+ and be configured properly to create TXT records.
+
 ```bash
 # we assume k8s cluster at version 1.23 or higher
 k3d cluster create --no-lb --k3s-arg "--disable=traefik,servicelb,metrics-server,local-storage@server:*" --image docker.io/rancher/k3s:v1.23.7-k3s1
@@ -42,7 +49,7 @@ spec:
           solverName: externaldns 
           config:
             labels:
-              cert-manager: true 
+              cert-manager: "true"
 ```
 ## external-dns variant
 Run external-dns with source set to crd and optionally label filters

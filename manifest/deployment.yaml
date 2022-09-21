@@ -21,11 +21,14 @@ spec:
           secret:
             secretName: externaldns-webhook-tls
       containers:
-      - image: absaoss/cert-manager-webhook-externaldns:v0.0.0-3bf4fbb-amd64
+      - image: jkremser/cert-manager-webhook-externaldns:dev
         name: cert-manager-webhook-externaldns
         args:
         - --tls-cert-file=/tls/tls.crt
         - --tls-private-key-file=/tls/tls.key
+        env:
+          - name: GROUP_NAME
+            value: "example.com"
         ports:
           - name: https
             containerPort: 443
