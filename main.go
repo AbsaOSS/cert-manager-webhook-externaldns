@@ -61,7 +61,7 @@ func fqdnToName(fqdn string) string {
 }
 
 func (c *externalDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) error {
-	fmt.Println("Present")
+	fmt.Println("calling Present")
 	cfg, err := loadConfig(ch.Config)
 	if err != nil {
 		return err
@@ -92,7 +92,7 @@ func (c *externalDNSProviderSolver) Present(ch *v1alpha1.ChallengeRequest) error
 
 // CleanUp should delete the relevant TXT record from the DNS provider console.
 func (c *externalDNSProviderSolver) CleanUp(ch *v1alpha1.ChallengeRequest) error {
-	fmt.Println("CleanUp")
+	fmt.Println("calling CleanUp")
 
 	deletePolicy := metav1.DeletePropagationForeground
 	deleteOptions := metav1.DeleteOptions{
@@ -107,7 +107,7 @@ func (c *externalDNSProviderSolver) CleanUp(ch *v1alpha1.ChallengeRequest) error
 
 // Initialize will be called when the webhook first starts.
 func (c *externalDNSProviderSolver) Initialize(kubeClientConfig *rest.Config, stopCh <-chan struct{}) error {
-	fmt.Println("Initialize")
+	fmt.Println("calling Initialize")
 	cl, err := dynamic.NewForConfig(kubeClientConfig)
 	if err != nil {
 		return err

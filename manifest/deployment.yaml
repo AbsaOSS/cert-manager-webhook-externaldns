@@ -21,7 +21,7 @@ spec:
           secret:
             secretName: externaldns-webhook-tls
       containers:
-      - image: jkremser/cert-manager-webhook-externaldns:dev
+      - image: absaoss/cert-manager-webhook-externaldns:dev
         name: cert-manager-webhook-externaldns
         args:
         - --tls-cert-file=/tls/tls.crt
